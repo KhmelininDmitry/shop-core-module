@@ -1,0 +1,11 @@
+{
+    "name": "shop/core",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Khmelinin Dmitry",
+            "email": "khmelinindmitry@gmail.com"
+        }
+    ],
+    "require": {}
+}
