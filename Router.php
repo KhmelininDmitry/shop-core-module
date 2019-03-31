@@ -47,7 +47,7 @@ class Router {
 
         foreach (self::$routes as $pattern => $route) {
             $matches = [];
-            if (preg_match("#{$pattern}#", $url, $matches)) {
+            if (preg_match("#{$pattern}#i", $url, $matches)) {
                 foreach ($matches as $k => $v) {
                     if(is_string($k)){
                         $route[$k] = $v;
