@@ -35,8 +35,9 @@ class View {
     }
 
     public function render($data) {
-        if(is_array($data)) extract($data);
-        $viewFile = APP . "/views/{$this->prefix}{$this->controller}/{$this->view}.php";
+        if (is_array($data)) extract($data);
+        $this->prefix = str_replace('\\', '/', $this->prefix); // Костыль, не правильно формируется путь до файла админки
+        $viewFile = APP . "/views/{$this->prefix}{$this->controller}/{$this->view}.php"; // Не смог разобраться с префиксом
         if(is_file($viewFile)) {
             ob_start();
             require_once $viewFile;
