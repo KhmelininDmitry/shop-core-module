@@ -5,25 +5,29 @@ namespace shop\base;
 use shop\Db;
 use Valitron\Validator;
 
-abstract class Model {
+abstract class Model
+{
 
     public $attributes = [];
     public $errors = [];
     public $rules = [];
 
-    public function __construct() {
+    public function __construct()
+    {
         Db::instance();
     }
 
-    public function load($data) {
+    public function load($data)
+    {
         foreach ($this->attributes as $name => $value) {
-            if(isset($data[$name])) {
+            if (isset($data[$name])) {
                 $this->attributes[$name] = $data[$name];
             }
         }
     }
 
-    public function save($table) {
+    public function save($table)
+    {
         $tbl = \R::dispense($table);
         foreach ($this->attributes as $name => $value) {
             $tbl->$name = $value;
@@ -31,7 +35,17 @@ abstract class Model {
         return \R::store($tbl);
     }
 
-    public function validate($data) {
+    public function update($table, $id)
+    {
+        $bean = \R::load($table, $id);
+        foreach ($this->attributes as $name => $value) {
+            $bean->$name = $value;
+        }
+        return \R::store($bean);
+    }
+
+    public function validate($data)
+    {
         Validator::langDir(WWW . '/validator/lang');
         Validator::lang('ru');
         $v = new Validator($data);
@@ -43,7 +57,8 @@ abstract class Model {
         return false;
     }
 
-    public function getErrors() {
+    public function getErrors()
+    {
         $errors = '<ul>';
         foreach ($this->errors as $error) {
             foreach ($error as $item) {
